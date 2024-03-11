@@ -22,4 +22,4 @@ MonoBehaviour:
     Secret:
       _encodedValue: 330b0b81b9a1231b699991919969a12b918969c1138913692b23b1991b91811399b989c1
   AdditionalApps: []
-  EnableLogging: 0
+  EnableLogging: 1
