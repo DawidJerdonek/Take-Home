@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,17 +38,13 @@ public class GameManager : MonoBehaviour
     {
         if(NetworkManager.sharedInstance.AuthenticatedPreviously())
         {
-            NetworkManager.sharedInstance.Reconnect(OnAuthenticationReqCompleted); //All forms of Auth
+            NetworkManager.sharedInstance.Reconnect(); //All forms of Auth
         }
         else
         {
             //NetworkManager.sharedInstance.ReqAnonymousAuthentication(OnAuthenticationReqCompleted);
-            loginHandler.RequestLogin(OnAuthenticationReqCompleted);
+            loginHandler.RequestLogin();
         }
     }
 
-    public void OnAuthenticationReqCompleted()
-    {
-        
-    }
 }
