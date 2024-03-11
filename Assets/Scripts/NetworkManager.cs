@@ -7,6 +7,8 @@ public class NetworkManager : MonoBehaviour
 {
     public delegate void AuthenticationReqCompleted();
     public delegate void AuthenticationReqFailed();
+    public delegate void LogoutCompleted();
+    public delegate void LogoutFailed();
 
     public static NetworkManager sharedInstance;
 
@@ -46,9 +48,76 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    public void Logout(LogoutCompleted logoutCompleted = null, LogoutFailed logoutFailed = null)
+    {
+        if(AuthenticationStatus())
+        {
+            //Successfull callback lambda
+            BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+            {
+                Debug.Log("Logout SUCCEEDED: " + responseData);
+                brainCloud.ResetStoredAnonymousId();
+                brainCloud.ResetStoredProfileId();
+
+                if(logoutCompleted != null)
+                {
+                    logoutCompleted();
+                }
+            };
+            //Failed callback lambda
+            BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+            {
+                Debug.Log("Logout FAILED: " + statusMessage);
+                brainCloud.ResetStoredAnonymousId();
+                brainCloud.ResetStoredProfileId();
+
+                if (logoutFailed != null)
+                {
+                    logoutFailed();
+                }
+            };
+
+            brainCloud.PlayerStateService.Logout(successCallback, failureCallback);
+        }
+        else
+        {
+            Debug.Log("Logout FAILED: User was never authenticated");
+
+            if (logoutFailed != null)
+            {
+                logoutFailed();
+            }
+        }
+    }
+
+    public void RequestUniversalAuthentication(string username, string password, AuthenticationReqCompleted authenticationReqCompleted = null,
+        AuthenticationReqFailed authenticationReqFailed = null)
+    {
+        //Successful callback lambda
+        BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+        {
+            Debug.Log("Universal Authentication SUCCEEDED: " + responseData);
+            HandleAuthenticationSuccess(responseData, cbObject, authenticationReqCompleted);
+        };
+
+        //Failed callback lambda
+        BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+        {
+            Debug.Log("Universal Authentication FAILED: " + statusMessage);
+            if (authenticationReqFailed != null)
+            {
+                authenticationReqFailed();
+            }
+        };
+
+        //brainCloud Universal Authentication
+        brainCloud.AuthenticateUniversal(username, password, true, successCallback, failureCallback); //True to create auth if no profile exists
+    }
+
+
     public void Reconnect(AuthenticationReqCompleted authenticationReqCompleted = null, AuthenticationReqFailed authenticationReqFailed = null)
     {
-        //Successfull callback lambda
+        //Successful callback lambda
         BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
         {
             Debug.Log("Reconnect Authentication SUCCEEDED: " + responseData);
@@ -72,7 +141,7 @@ public class NetworkManager : MonoBehaviour
     public void ReqAnonymousAuthentication(AuthenticationReqCompleted authenticationReqCompleted = null,
         AuthenticationReqFailed authenticationReqFailed = null)
     {
-        //Successfull callback lambda
+        //Successful callback lambda
         BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
         {
             Debug.Log("AnonymouseAuthentication Request SUCCEEDED: " + responseData);

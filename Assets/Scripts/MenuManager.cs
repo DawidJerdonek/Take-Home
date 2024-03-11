@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    
     public void LoginScene()
     {
         SceneManager.LoadScene("Login");

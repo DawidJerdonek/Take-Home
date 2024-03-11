@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManagerInstance;
 
+    public LoginHandler loginHandler;
+
     private void Awake()
     {
 
@@ -39,7 +41,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            NetworkManager.sharedInstance.ReqAnonymousAuthentication(OnAuthenticationReqCompleted);
+            //NetworkManager.sharedInstance.ReqAnonymousAuthentication(OnAuthenticationReqCompleted);
+            loginHandler.RequestLogin(OnAuthenticationReqCompleted);
         }
     }
 
