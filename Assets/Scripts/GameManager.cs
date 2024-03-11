@@ -31,9 +31,16 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void HandleAuthentication()
+    public void HandleAuthentication() 
     {
-        NetworkManager.sharedInstance.ReqAnonymousAuthentication(OnAuthenticationReqCompleted);
+        if(NetworkManager.sharedInstance.AuthenticatedPreviously())
+        {
+            NetworkManager.sharedInstance.Reconnect(OnAuthenticationReqCompleted); //All forms of Auth
+        }
+        else
+        {
+            NetworkManager.sharedInstance.ReqAnonymousAuthentication(OnAuthenticationReqCompleted);
+        }
     }
 
     public void OnAuthenticationReqCompleted()
