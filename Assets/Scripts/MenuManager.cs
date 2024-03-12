@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    
+    [SerializeField] private GameObject displayLeaderboard;
+
+    public void viewLeaderboard()
+    {
+        displayLeaderboard.GetComponent<LeaderboardDisplay>().SetLeaderboardData(NetworkManager.brainCloudHighscoreLeaderboardID);
+        displayLeaderboard.SetActive(true);
+    }
     public void LoginScene()
     {
         SceneManager.LoadScene("Login");

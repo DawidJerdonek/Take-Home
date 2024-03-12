@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if(NetworkManager.sharedInstance.AuthenticatedPreviously())
         {
-            NetworkManager.sharedInstance.Reconnect(); //All forms of Auth
+            NetworkManager.sharedInstance.Reconnect(OnAuthenticationReqCompleted); //All forms of Auth
         }
         else
         {
@@ -47,4 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnLeaderboardRequestCompleted(Leaderboard leaderboard)
+    {
+        LeaderboardsManager.instance.AddLeaderboard(leaderboard);
+    }
+
+    public void OnAuthenticationReqCompleted()
+    {
+        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+    }
 }
