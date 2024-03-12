@@ -19,6 +19,7 @@ public class NetworkManager : MonoBehaviour
     public delegate void PostScoreReqFailed();
 
     public static NetworkManager sharedInstance;
+    public bool isPlayerUniversallyAuthenticated;
 
     private BrainCloudWrapper m_brainCloud;
     private string m_username;
@@ -151,6 +152,7 @@ public class NetworkManager : MonoBehaviour
             //Successful callback lambda
             BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
             {
+                isPlayerUniversallyAuthenticated = false;
                 Debug.Log("Logout SUCCEEDED: " + responseData);
                 m_brainCloud.ResetStoredAnonymousId();
                 m_brainCloud.ResetStoredProfileId();
@@ -192,6 +194,7 @@ public class NetworkManager : MonoBehaviour
         //Successful callback lambda
         BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = true;
             Debug.Log("Universal Authentication SUCCEEDED: " + responseData);
             HandleAuthenticationSuccess(responseData, cbObject, authenticationReqCompleted);
         };
@@ -199,6 +202,7 @@ public class NetworkManager : MonoBehaviour
         //Failed callback lambda
         BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = false;
             Debug.Log("Universal Authentication FAILED: " + statusMessage);
             if (authenticationReqFailed != null)
             {
@@ -216,6 +220,7 @@ public class NetworkManager : MonoBehaviour
         //Successful callback lambda
         BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = true;
             Debug.Log("Reconnect Authentication SUCCEEDED: " + responseData);
             HandleAuthenticationSuccess(responseData, cbObject, authenticationReqCompleted);
         };
@@ -223,6 +228,7 @@ public class NetworkManager : MonoBehaviour
         //Failed callback lambda
         BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = false;
             Debug.Log("Reconnect Authentication FAILED: " + statusMessage);
             if (authenticationReqFailed != null)
             {
@@ -240,6 +246,7 @@ public class NetworkManager : MonoBehaviour
         //Successful callback lambda
         BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = false;
             Debug.Log("AnonymouseAuthentication Request SUCCEEDED: " + responseData);
             HandleAuthenticationSuccess(responseData, cbObject, authenticationReqCompleted);
         };
@@ -247,6 +254,7 @@ public class NetworkManager : MonoBehaviour
         //Failed callback lambda
         BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
         {
+            isPlayerUniversallyAuthenticated = false;
             Debug.Log("AnonymouseAuthentication Request FAILED: " + statusMessage);
             if (authenticationReqFailed != null)
             {
@@ -262,7 +270,7 @@ public class NetworkManager : MonoBehaviour
     public void PostScoreToLeaderboard(string leaderboardID, float time, PostScoreReqCompleted postScoreReqCompleted = null,
         PostScoreReqFailed postScoreReqFailed = null)
     {
-        PostScoreToLeaderboard(leaderboardID, time,)
+        PostScoreToLeaderboard(leaderboardID, time, GetUsername(), postScoreReqCompleted, postScoreReqFailed);
     }
 
     public void PostScoreToLeaderboard(string leaderboardID, float time, string nickname, PostScoreReqCompleted postScoreReqCompleted = null,

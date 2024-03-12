@@ -1123,7 +1123,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayLeaderboard: {fileID: 662389080}
-  leaderboardDisplay: {fileID: 662389082}
+  defaultPanel:
+  - {fileID: 1252048589}
+  - {fileID: 1919241614}
+  - {fileID: 98737426}
+  - {fileID: 1417224826}
+  - {fileID: 790981101}
+  loginButton: {fileID: 1252048591}
 --- !u!4 &242641405
 Transform:
   m_ObjectHideFlags: 0
@@ -1313,7 +1319,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 384032431}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 242641404}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: StopViewingLeaderboard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &384032431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,6 +1415,7 @@ MonoBehaviour:
   - {fileID: 1919241614}
   - {fileID: 98737426}
   - {fileID: 1417224826}
+  - {fileID: 790981101}
 --- !u!4 &443314470
 Transform:
   m_ObjectHideFlags: 0
@@ -2221,7 +2240,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 242641404}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: viewLeaderboard
+        m_MethodName: ViewLeaderboard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2683,7 +2702,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play Without Login
+  m_text: Play Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3256,7 +3275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1252048590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4971,7 +4990,7 @@ GameObject:
   - component: {fileID: 1919241617}
   - component: {fileID: 1919241616}
   m_Layer: 5
-  m_Name: NoLoginButton
+  m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5041,7 +5060,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1919241617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 242641404}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: GameplayScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1919241617
 MonoBehaviour:
   m_ObjectHideFlags: 0

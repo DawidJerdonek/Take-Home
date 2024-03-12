@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManagerInstance;
 
     public LoginHandler loginHandler;
+    private float m_elapsedTime;
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        m_elapsedTime += Time.deltaTime;
     }
 
     public void HandleAuthentication() 
@@ -54,6 +55,12 @@ public class GameManager : MonoBehaviour
 
     public void OnAuthenticationReqCompleted()
     {
+        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+    }
+
+    private void OnPostScoreReqCompleted()
+    {
+        LeaderboardsManager.instance.SetUserTime(m_elapsedTime);
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
     }
 }
