@@ -89,23 +89,23 @@ Integrated brainCloud into a Cookie Clicker game.
 23. This should log the stats of the account that is logged into brainCloud.
 
 ### What I found easy:
-I liked how easy to navigate and quite user friendly brainCloud is.
-I think the documentation and explanations that brainCloud provides for their service are incredibly good, intuitive and quite comprehensive.
-Implementing user statistics and achievements was straight forward and easy to understand.
+1. I liked how easy to navigate and quite user friendly brainCloud is.
+2. I think the documentation and explanations that brainCloud provides for their service are incredibly good, intuitive and quite comprehensive.
+3. Implementing user statistics and achievements was straight forward and easy to understand.
 
 ### What I found difficult:
-Implementing Leaderboards into the project and understanding how they are handled. 
-Understanding how the data is stored on brainCloud.
+1. Implementing Leaderboards into the project and understanding how they are handled. 
+2. Understanding how the data is stored on brainCloud.
 
 ### What skills I have learned:
-How to set up brainCloud backend for a game. 
-BrainCloud is incredibly valuable and impressive in terms of features and tools which it provides.
-How to request data from brainCloud.
-How to send data from client to brainCloud leaderboards.
-How to implement and display statistics for users.
-How to implement and display achievements for users.
-How I can apply permanent upgrades in a game to a user, based on achievements.
-How to create a basic chat using Leaderboards.
+1. How to set up brainCloud backend for a game. 
+2. BrainCloud is incredibly valuable and impressive in terms of features and tools which it provides.
+3. How to request data from brainCloud.
+4. How to send data from client to brainCloud leaderboards.
+5. How to implement and display statistics for users.
+6. How to implement and display achievements for users.
+7. How I can apply permanent upgrades in a game to a user, based on achievements.
+8. How to create a basic chat using Leaderboards.
 
 ### Video Link:
 
