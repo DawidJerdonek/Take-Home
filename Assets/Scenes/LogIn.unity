@@ -7973,6 +7973,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1232741094}
     - target: {fileID: 277330578573558324, guid: 40d130a7b0db17e499dd3458b1e52c80, type: 3}
+      propertyPath: loggedInAsText
+      value: 
+      objectReference: {fileID: 2012787048}
+    - target: {fileID: 277330578573558324, guid: 40d130a7b0db17e499dd3458b1e52c80, type: 3}
       propertyPath: timeElapsedText
       value: 
       objectReference: {fileID: 644160519}

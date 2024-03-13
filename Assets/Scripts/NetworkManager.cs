@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviour
 
 
 
-    public static NetworkManager sharedInstance;
+    public static NetworkManager instance;
     public bool isPlayerUniversallyAuthenticated;
 
     private BrainCloudWrapper m_brainCloud;
@@ -58,13 +58,13 @@ public class NetworkManager : MonoBehaviour
 
     private void Awake()
     {
-        if (sharedInstance != null && sharedInstance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            sharedInstance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
@@ -162,11 +162,7 @@ public class NetworkManager : MonoBehaviour
                     }
                 }
 
-                //
-                //
-                Leaderboard lb = new Leaderboard(leaderboardId, leaderboardListEntries); //Comes out as null???
-                //
-                //
+                Leaderboard lb = new Leaderboard(leaderboardId, leaderboardListEntries);
 
                 if (leaderboardReqCompleted != null)
                 {

@@ -31,7 +31,7 @@ public class PostScore : MonoBehaviour
     {
         Statistics cookieStat = StatisticsManager.instance.GetStatisticByName("CookiesClicked");
         
-        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, cookieStat.Value, leaderboardUsernameInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
+        NetworkManager.instance.PostScoreToLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, cookieStat.Value, leaderboardUsernameInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
     }
 
     public void SendMessageToChat()
@@ -39,7 +39,7 @@ public class PostScore : MonoBehaviour
         Statistics chatsSent = StatisticsManager.instance.GetStatisticByName("ChatsSent");
         chatsSent.IncrementValue();
 
-        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudChatLeaderboardID, 0, chatInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
-        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
+        NetworkManager.instance.PostScoreToLeaderboard(NetworkManager.brainCloudChatLeaderboardID, 0, chatInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
+        NetworkManager.instance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
     }
 }

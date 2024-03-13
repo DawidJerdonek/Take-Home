@@ -37,7 +37,7 @@ public class CookieClicker : MonoBehaviour
             cookie.onClick.AddListener(CookieClicked);
             SetCookieStat();
         }
-        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID,GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
+        NetworkManager.instance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID,GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
     }
 
     void Update()
@@ -137,7 +137,7 @@ public class CookieClicker : MonoBehaviour
         Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
         if (dictionary != null)
         {
-            NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
+            NetworkManager.instance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
         }
 
         //Reset Timer Used to Increment

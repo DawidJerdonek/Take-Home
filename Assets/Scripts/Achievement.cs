@@ -29,7 +29,7 @@ public class Achievement
     public void AwardAchievement()
     {
         m_awarded = true;
-        NetworkManager.sharedInstance.AwardAchievementReq(this);
+        NetworkManager.instance.AwardAchievementReq(this);
     }
 
     public string Id

@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     public static MenuManager instance;
     [SerializeField] private List<GameObject> defaultPanel = new List<GameObject>();
     [SerializeField] private Button loginButton;
+    [SerializeField] private TextMeshProUGUI loggedInAsText;
 
     [Header("Leaderboard")]
     [SerializeField] private GameObject displayLeaderboard;
@@ -39,6 +40,14 @@ public class MenuManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Gameplay")
         {
             displayChat.GetComponent<LeaderboardDisplay>().SetLeaderboardData(NetworkManager.brainCloudChatLeaderboardID);
+        }
+        if (SceneManager.GetActiveScene().name == "LogIn")
+        {
+            if(loggedInAsText != null)
+            {
+                loggedInAsText.text ="Logged in As:\n" + NetworkManager.instance.GetUsername();
+            }
+            
         }
     }
 

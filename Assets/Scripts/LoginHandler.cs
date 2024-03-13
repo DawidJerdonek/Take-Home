@@ -46,8 +46,8 @@ public class LoginHandler : MonoBehaviour
 
     public void ConfirmLogin()
     {
-        NetworkManager.sharedInstance.SetUserName(usernameInput.text);
-        NetworkManager.sharedInstance.RequestUniversalAuthentication(usernameInput.text,passwordInput.text,
+        NetworkManager.instance.SetUserName(usernameInput.text);
+        NetworkManager.instance.RequestUniversalAuthentication(usernameInput.text,passwordInput.text,
             GameManager.gameManagerInstance.OnAuthenticationReqCompleted);
 
         for (int i = 0; i < LoginPanel.Count; i++)
@@ -63,7 +63,7 @@ public class LoginHandler : MonoBehaviour
 
     public void ConfirmLogout()
     {
-        NetworkManager.sharedInstance.Logout();
+        NetworkManager.instance.Logout();
         MenuManager.instance.MainMenuScene();
     }
 }

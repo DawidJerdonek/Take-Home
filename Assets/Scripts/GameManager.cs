@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
 
     public void HandleAuthentication() 
     {
-        if(NetworkManager.sharedInstance.AuthenticatedPreviously())
+        if(NetworkManager.instance.AuthenticatedPreviously())
         {
-            NetworkManager.sharedInstance.Reconnect(OnAuthenticationReqCompleted); //All forms of Auth
+            NetworkManager.instance.Reconnect(OnAuthenticationReqCompleted); //All forms of Auth
         }
         else
         {
@@ -47,10 +47,10 @@ public class GameManager : MonoBehaviour
 
     public void OnAuthenticationReqCompleted()
     {
-        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, OnLeaderboardRequestCompleted);
-        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
-        NetworkManager.sharedInstance.ReqUserStatistics(OnUserStatisticsReqCompleted);
-        NetworkManager.sharedInstance.RequestAchievements(OnAchievenemtReqCompleted);
+        NetworkManager.instance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, OnLeaderboardRequestCompleted);
+        NetworkManager.instance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+        NetworkManager.instance.ReqUserStatistics(OnUserStatisticsReqCompleted);
+        NetworkManager.instance.RequestAchievements(OnAchievenemtReqCompleted);
     }
 
     public void OnLeaderboardRequestCompleted(Leaderboard leaderboard)
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     private void OnPostScoreReqCompleted()
     {
         LeaderboardsManager.instance.SetUserTime(m_elapsedTime);
-        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+        NetworkManager.instance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
     }
 
     private void OnUserStatisticsReqCompleted(ref List<Statistics> statistics)
