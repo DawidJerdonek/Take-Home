@@ -39,7 +39,7 @@ public class PostScore : MonoBehaviour
         Statistics chatsSent = StatisticsManager.instance.GetStatisticByName("ChatsSent");
         chatsSent.IncrementValue();
 
-        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudChatLeaderboardID, chatsSent.Value, chatInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
+        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudChatLeaderboardID, 0, chatInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
     }
 }

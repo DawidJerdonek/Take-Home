@@ -4,8 +4,9 @@
 
 ### Project Overview:
 A project which interacts with brainCloud backend using the brainCloud package.
-The project me is a cookie clicker game where the player is shown how many times they have clicked a cookie,
+The project is a Cookie Clicker game where the player is shown how many times they have clicked a cookie,
 and how long they have been clicking for. Both these values are stored by utilising brainCloud.
+Utilising Leaderboards, Statistics, Achievements, Authentication
 
 ### Project Features:
 Projects integrated with brainCloud Unity SDK
@@ -18,8 +19,14 @@ Players are able to click a cookie, the idea similar to many games of the "Cooki
 Players can earn achievements which in turn unlock permanent upgrades for the game.(eg. after 100 cookies, players get two cookies for each click)
 Players can save their progress to brainCloud by clicking save or save and exit.
 Players can view the leaderboard, statistics, and achievements from the menu.
+Players can chat with each other(Utilising Leaderboards)
 
-###How to Demo:
+#### To showcase custom functionality and creative flair:
+Implemented a chat utilising Leaderboards rather than any built-in messaging/chat tools.
+Implemented a permanent upgrade system utilising Achievements.
+Integrated brainCloud into a Cookie Clicker game.  
+
+### How to Demo:
 
 ### What I found easy:
 I liked how easy to navigate and quite user friendly brainCloud is.

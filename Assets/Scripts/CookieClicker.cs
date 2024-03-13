@@ -55,11 +55,6 @@ public class CookieClicker : MonoBehaviour
 
         CheckCookieAchievements();
 
-        //Update Statistics
-        //Statistics secondsStat = StatisticsManager.instance.GetStatisticByName(NetworkManager.brainCloudStatSecondsElapsed);
-        //SecondsStat.increment();
-
-
     }
 
     void CheckCookieAchievements()
@@ -67,17 +62,16 @@ public class CookieClicker : MonoBehaviour
         Color green = new Color32(127, 255, 32, 255);
         
         Achievement click100 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick100);
-        if(click100 != null && !click100.Awarded && cookieClicked >= 100)
+        if((click100 != null && !click100.Awarded && cookieClicked >= 100) || (click100.Awarded && !doubleClicks))
         {
             click100.AwardAchievement();
             doubleClicks = true;
             achieve100Text.color = green;
             achieve100Text.text += "    x2 Clicks!";
-            Debug.Log(click100.Awarded);
         }
 
         Achievement click500 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick500);
-        if (click500 != null && !click500.Awarded && cookieClicked >= 500)
+        if (click500 != null && !click500.Awarded && cookieClicked >= 500 || (click500.Awarded && !quadraClicks))
         {
             click500.AwardAchievement();
             quadraClicks = true;
@@ -86,7 +80,7 @@ public class CookieClicker : MonoBehaviour
         }
 
         Achievement click10000 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick10000);
-        if (click10000 != null && !click10000.Awarded && cookieClicked >= 10000)
+        if (click10000 != null && !click10000.Awarded && cookieClicked >= 10000 || (click10000.Awarded && !clicksX20))
         {
             click10000.AwardAchievement();
             clicksX20 = true;
