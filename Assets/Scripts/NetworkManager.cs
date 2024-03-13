@@ -14,8 +14,7 @@ public class NetworkManager : MonoBehaviour
 
     [Header("User Stats Constants")]
     public const string brainCloudStatCookiesClicked = "CookiesClicked";
-    public const string brainCloudStatMinutesElapsed = "MinutesElapsed";
-    public const string brainCloudStatSecondsElapsed = "SecondsElapsed";
+    public const string brainCloudStatTimeElapsed = "TimeElapsed";
 
     [Header("Achievement Constants")]
     public const string brainCloudAchievementClick100 = "100Cookies";
@@ -24,8 +23,7 @@ public class NetworkManager : MonoBehaviour
 
     public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
     { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" }, 
-        {brainCloudStatMinutesElapsed ,"Minutes the user clicked for"}, 
-        { brainCloudStatSecondsElapsed,"Seconds user clicked for"} };
+        { brainCloudStatTimeElapsed, "Time Spent Clicking Cookies"} };
 
     public delegate void AuthenticationReqCompleted();
     public delegate void AuthenticationReqFailed();

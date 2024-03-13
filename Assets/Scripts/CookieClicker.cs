@@ -18,6 +18,8 @@ public class CookieClicker : MonoBehaviour
 
     public long cookieClicked = 0;
 
+
+    private float timerSinceLastSave = 0;
     private float timer = 0;
     private float hours = 0;
     private float minutes = 0;
@@ -26,6 +28,7 @@ public class CookieClicker : MonoBehaviour
     private bool doubleClicks = false;
     private bool quadraClicks = false;
     private bool clicksX20 = false;
+
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Gameplay")
@@ -42,10 +45,11 @@ public class CookieClicker : MonoBehaviour
         timesClickedText.text = "Cookie Clicked: " + cookieClicked + " Times!";
 
         //Time spent clicking
+        timerSinceLastSave += Time.deltaTime;
         timer += Time.deltaTime;
         minutes = Mathf.FloorToInt(timer / 60);
         seconds = Mathf.FloorToInt(timer % 60);
-        hours = Mathf.FloorToInt(minutes % 60);
+        hours = Mathf.FloorToInt(minutes / 60);
         timeSpentText.text = "You have been clicking for:\n" + hours + " Hours, " + minutes + " Minutes, and " + seconds + " Seconds!";
 
         CheckCookieAchievements();
@@ -121,26 +125,32 @@ public class CookieClicker : MonoBehaviour
     {
         Statistics cookieStat = StatisticsManager.instance.GetStatisticByName("CookiesClicked");
         cookieClicked = cookieStat.Value;
+
+        Statistics timeStat = StatisticsManager.instance.GetStatisticByName("TimeElapsed");
+        timer = timeStat.Value;
     }
 
     public void SaveStats()
     {
+
+        Statistics timeElapsed = StatisticsManager.instance.GetStatisticByName(NetworkManager.brainCloudStatTimeElapsed);
+        int sendTime = (int)timerSinceLastSave;
+        timeElapsed.IncrementByValue(sendTime);
+
         //Send to brainCloud 
         Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
         if (dictionary != null)
         {
             NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
         }
+
+        //Reset Timer Used to Increment
+        timerSinceLastSave = 0;
     }
 
     public void SaveAndExit()
     {
-        //Send to brainCloud
-        Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
-        if (dictionary != null)
-        {
-            NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
-        }
+        SaveStats();
         MenuManager.instance.MainMenuScene();
     }
 }
