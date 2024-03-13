@@ -10,11 +10,6 @@ public class GameManager : MonoBehaviour
     public LoginHandler loginHandler;
     private float m_elapsedTime;
 
-    private void Awake()
-    {
-
-    }
-
     void Start()
     {
         if (gameManagerInstance != null && gameManagerInstance != this)
@@ -48,16 +43,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnLeaderboardRequestCompleted(Leaderboard leaderboard)
-    {
-        LeaderboardsManager.instance.AddLeaderboard(leaderboard);
-    }
+
 
     public void OnAuthenticationReqCompleted()
     {
+        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, OnLeaderboardRequestCompleted);
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
         NetworkManager.sharedInstance.ReqUserStatistics(OnUserStatisticsReqCompleted);
         NetworkManager.sharedInstance.RequestAchievements(OnAchievenemtReqCompleted);
+    }
+
+    public void OnLeaderboardRequestCompleted(Leaderboard leaderboard)
+    {
+        LeaderboardsManager.instance.AddLeaderboard(leaderboard);
     }
 
     private void OnPostScoreReqCompleted()

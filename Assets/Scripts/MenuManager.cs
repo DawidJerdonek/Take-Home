@@ -19,6 +19,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cookiesClickedText;
     [SerializeField] private TextMeshProUGUI timeElapsedText;
 
+    [Header("Chat")]
+    public GameObject displayChat;
+    [SerializeField] private GameObject showChatButton;
+
     [Header("Achievements")]
     [SerializeField] private GameObject displayAchievements;
     [SerializeField] private TextMeshProUGUI cookies100Text;
@@ -28,6 +32,28 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Gameplay")
+        {
+            displayChat.GetComponent<LeaderboardDisplay>().SetLeaderboardData(NetworkManager.brainCloudChatLeaderboardID);
+        }
+    }
+
+    public void ViewChat()
+    {
+        showChatButton.SetActive(false);
+        displayChat.GetComponent<LeaderboardDisplay>().SetLeaderboardData(NetworkManager.brainCloudChatLeaderboardID);
+        displayChat.SetActive(true);
+
+    }
+
+    public void StopViewingChat()
+    {
+        showChatButton.SetActive(true);
+        displayChat.SetActive(false);
     }
 
     public void ViewLeaderboard()
@@ -43,9 +69,6 @@ public class MenuManager : MonoBehaviour
 
     public void ViewAchievements()
     {
-        //Color green = new Color32(127, 255, 32, 255);
-        //Color white = new Color32(255, 255, 255, 255);
-
         for (int i = 0; i < defaultPanel.Count; i++)
         {
             defaultPanel[i].SetActive(false);

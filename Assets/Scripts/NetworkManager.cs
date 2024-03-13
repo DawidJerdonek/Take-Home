@@ -2,28 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BrainCloud.LitJson;
-using static NetworkManager;
-using UnityEditor.Compilation;
 
 public class NetworkManager : MonoBehaviour
 {
-    [Header("Leaderboard Constants")]
+
     public const string brainCloudHighscoreLeaderboardID = "Highscore";
     public const int brainCloudDefaultMinHighscoreIndex = 0;
     public const int brainCloudDefaultMaxHighscoreIndex = 9;
 
+    public const string brainCloudChatLeaderboardID = "Chat";
+    public const int brainCloudDefaultMinChatIndex = 0;
+    public const int brainCloudDefaultMaxChatIndex = 17;
+
     [Header("User Stats Constants")]
     public const string brainCloudStatCookiesClicked = "CookiesClicked";
     public const string brainCloudStatTimeElapsed = "TimeElapsed";
+    public const string brainCloudStatChatsSent = "ChatsSent";
+
+    public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
+    { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" },
+        { brainCloudStatTimeElapsed, "Time Spent Clicking Cookies"},
+    { brainCloudStatChatsSent, "Number of messages sent into chat"}};
 
     [Header("Achievement Constants")]
     public const string brainCloudAchievementClick100 = "100Cookies";
     public const string brainCloudAchievementClick500 = "500Cookies";
     public const string brainCloudAchievementClick10000 = "10000Cookies";
 
-    public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
-    { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" }, 
-        { brainCloudStatTimeElapsed, "Time Spent Clicking Cookies"} };
+
 
     public delegate void AuthenticationReqCompleted();
     public delegate void AuthenticationReqFailed();
@@ -110,7 +116,18 @@ public class NetworkManager : MonoBehaviour
     public void RequestLeaderboard(string leaderboardId, LeaderboardReqCompleted leaderboardReqCompleted = null,
         LeaderboardReqFailed leaderboardReqFailed = null)
     {
-        RequestLeaderboard(leaderboardId, brainCloudDefaultMinHighscoreIndex, brainCloudDefaultMaxHighscoreIndex, leaderboardReqCompleted, leaderboardReqFailed);
+
+        switch(leaderboardId)
+        {
+            case "Highscore":
+                RequestLeaderboard(leaderboardId, brainCloudDefaultMinHighscoreIndex, brainCloudDefaultMaxHighscoreIndex, leaderboardReqCompleted, leaderboardReqFailed);
+                break;
+            case "Chat":
+                RequestLeaderboard(leaderboardId, brainCloudDefaultMinChatIndex, brainCloudDefaultMaxChatIndex, leaderboardReqCompleted, leaderboardReqFailed);
+                break;
+            default:
+                break;
+        }
     }
 
     public void RequestLeaderboard(string leaderboardId, int startIndex, int endIndex, LeaderboardReqCompleted leaderboardReqCompleted = null,

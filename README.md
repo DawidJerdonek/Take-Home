@@ -13,11 +13,13 @@ The project is made up of 3 Scenes. Main Menu, Login, Gameplay
 The project utilises Universal Authentication for players.
 Players can log in using a username and password while also being able to log out.
 The project contains leaderboards which store player highscores.
-Players can submit their scores to the leaderboards by clicking Submit Highscore.
+Players can submit their scores to the leaderboards by entering a name and clicking Submit Highscore.
 Players are able to click a cookie, the idea similar to many games of the "Cookie Clicker" genre.
 Players can earn achievements which in turn unlock permanent upgrades for the game.(eg. after 100 cookies, players get two cookies for each click)
 Players can save their progress to brainCloud by clicking save or save and exit.
-How to Demo:
+Players can view the leaderboard, statistics, and achievements from the menu.
+
+###How to Demo:
 
 ### What I found easy:
 I liked how easy to navigate and quite user friendly brainCloud is.
@@ -33,7 +35,7 @@ BrainCloud is incredibly valuable and impressive in terms of features and tools 
 How to send data from client to brainCloud leaderboards.
 How to implement and display statistics for users.
 How to implement and display achievements for users.
-How I can apply permanent upgrades in a game to a user based on achievements.
+How I can apply permanent upgrades in a game to a user, based on achievements.
 
 ### Video Link:
 

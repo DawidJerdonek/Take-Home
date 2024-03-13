@@ -37,6 +37,7 @@ public class CookieClicker : MonoBehaviour
             cookie.onClick.AddListener(CookieClicked);
             SetCookieStat();
         }
+        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID,GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
     }
 
     void Update()

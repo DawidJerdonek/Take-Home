@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PostScore : MonoBehaviour
 {
+    [SerializeField] private TMP_InputField chatInputField;
+
     [SerializeField] private TMP_InputField leaderboardUsernameInputField;
     private NetworkManager.PostScoreReqCompleted m_postScoreReqCompleted;
     private NetworkManager.PostScoreReqFailed m_postScoreReqFailed;
@@ -30,5 +32,14 @@ public class PostScore : MonoBehaviour
         Statistics cookieStat = StatisticsManager.instance.GetStatisticByName("CookiesClicked");
         
         NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, cookieStat.Value, leaderboardUsernameInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
+    }
+
+    public void SendMessageToChat()
+    {
+        Statistics chatsSent = StatisticsManager.instance.GetStatisticByName("ChatsSent");
+        chatsSent.IncrementValue();
+
+        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudChatLeaderboardID, chatsSent.Value, chatInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
+        NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudChatLeaderboardID, GameManager.gameManagerInstance.OnLeaderboardRequestCompleted);
     }
 }
