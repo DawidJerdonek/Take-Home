@@ -105,7 +105,7 @@ public class MenuManager : MonoBehaviour
 
         int minutes = Mathf.FloorToInt(timeStat.Value / 60);
         int seconds = Mathf.FloorToInt(timeStat.Value % 60);
-        int hours = Mathf.FloorToInt(timeStat.Value / 60);
+        int hours = Mathf.FloorToInt(minutes / 60);
 
         timeElapsedText.text = "You spent: " + hours + " Hours, " + minutes + " Minutes, and " + seconds + " Seconds, Clicking Cookies";
 
