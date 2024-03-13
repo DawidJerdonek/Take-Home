@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Leaderboard : MonoBehaviour
+public class Leaderboard
 {
     private string m_name;
     private List<EnterLeaderboard> m_leaderboard;
@@ -11,7 +11,6 @@ public class Leaderboard : MonoBehaviour
     {
         m_name = name;
         m_leaderboard = leaderboard;
-        Debug.Log(m_leaderboard[0].Username + m_leaderboard[0].Time + m_leaderboard[0].Rank);
     }
 
     public EnterLeaderboard GetLeaderboardEntryAtIndex(int index)

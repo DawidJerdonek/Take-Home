@@ -21,7 +21,7 @@ public class LeaderboardRanking : MonoBehaviour
     {
         this.rank.text = highScore.Rank.ToString() + ".";
         this.username.text = highScore.Username;
-        this.time.text = TimeSpan.FromSeconds(highScore.Time).ToString(@"mm\:ss");
+        this.time.text = highScore.Time.ToString();
 
         if(highScore.IsUserScore)
         {

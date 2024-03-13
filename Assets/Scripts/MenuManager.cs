@@ -43,7 +43,7 @@ public class MenuManager : MonoBehaviour
 
     public void ViewAchievements()
     {
-        Color green = new Color32(127, 255, 32, 255);
+        //Color green = new Color32(127, 255, 32, 255);
         //Color white = new Color32(255, 255, 255, 255);
 
         for (int i = 0; i < defaultPanel.Count; i++)
@@ -65,19 +65,19 @@ public class MenuManager : MonoBehaviour
         {
             cookies100Text.color = Color.green;
         }
-        else { cookies100Text.color = Color.white; }
+        else { cookies100Text.color = Color.red; }
 
         if (click500.Awarded)
         {
             cookies500Text.color = Color.green;
         }
-        else { cookies500Text.color = Color.white; }
+        else { cookies500Text.color = Color.red; }
 
         if (click10000.Awarded)
         {
             cookies10KText.color = Color.green;
         }
-        else { cookies10KText.color = Color.white; }
+        else { cookies10KText.color = Color.red; }
 
         displayAchievements.SetActive(true);
     }

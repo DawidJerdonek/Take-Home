@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PostScore : MonoBehaviour
 {
-    //[SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TMP_InputField leaderboardUsernameInputField;
     private NetworkManager.PostScoreReqCompleted m_postScoreReqCompleted;
     private NetworkManager.PostScoreReqFailed m_postScoreReqFailed;
 
@@ -27,6 +27,8 @@ public class PostScore : MonoBehaviour
 
     public void SubmitScore()
     {
-        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, 9999, NetworkManager.sharedInstance.GetUsername(), m_postScoreReqCompleted, m_postScoreReqFailed);
+        Statistics cookieStat = StatisticsManager.instance.GetStatisticByName("CookiesClicked");
+        
+        NetworkManager.sharedInstance.PostScoreToLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, cookieStat.Value, leaderboardUsernameInputField.text, m_postScoreReqCompleted, m_postScoreReqFailed);
     }
 }
