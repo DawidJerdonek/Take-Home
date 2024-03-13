@@ -46,6 +46,7 @@ public class LoginHandler : MonoBehaviour
 
     public void ConfirmLogin()
     {
+        NetworkManager.sharedInstance.SetUserName(usernameInput.text);
         NetworkManager.sharedInstance.RequestUniversalAuthentication(usernameInput.text,passwordInput.text, 
             m_authenticationReqCompleted,m_authenticationReqFailed);
 

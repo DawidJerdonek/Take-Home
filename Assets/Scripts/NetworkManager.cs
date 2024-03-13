@@ -2,12 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BrainCloud.LitJson;
+using static NetworkManager;
+using UnityEditor.Compilation;
 
 public class NetworkManager : MonoBehaviour
 {
     public const string brainCloudHighscoreLeaderboardID = "Highscore";
     public const int brainCloudDefaultMinHighscoreIndex = 0;
     public const int brainCloudDefaultMaxHighscoreIndex = 9;
+
+    //Statistics
+    public const string brainCloudStatCookiesClicked = "CookiesClicked";
+    public const string brainCloudStatMinutesElapsed = "MinutesElapsed";
+    public const string brainCloudStatSecondsElapsed = "SecondsElapsed";
+
+    public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
+    { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" }, 
+        {brainCloudStatMinutesElapsed ,"Minutes the user clicked for"}, 
+        { brainCloudStatSecondsElapsed,"Seconds user clicked for"} };
 
     public delegate void AuthenticationReqCompleted();
     public delegate void AuthenticationReqFailed();
@@ -17,6 +29,11 @@ public class NetworkManager : MonoBehaviour
     public delegate void LeaderboardReqFailed();
     public delegate void PostScoreReqCompleted();
     public delegate void PostScoreReqFailed();
+    public delegate void UserStatisticsReqCompleted(ref List<Statistics> statistics);
+    public delegate void UserStatisticsReqFailed();
+    public delegate void IncrementUserStatisticsCompleted(ref List<Statistics> statistics);
+    public delegate void IncrementUserStatisticsFailed();
+
 
     public static NetworkManager sharedInstance;
     public bool isPlayerUniversallyAuthenticated;
@@ -54,6 +71,11 @@ public class NetworkManager : MonoBehaviour
     public bool UsernameSaved()
     {
         return m_username != "";
+    }
+
+    public void SetUserName(string username)
+    {
+        m_username = username;
     }
 
     public string GetUsername()
@@ -309,6 +331,115 @@ public class NetworkManager : MonoBehaviour
             if(postScoreReqFailed != null)
             {
                 postScoreReqFailed();
+            }
+        }
+    }
+
+    public void ReqUserStatistics(UserStatisticsReqCompleted userStatisticsReqCompleted = null, UserStatisticsReqFailed userStatisticsReqFailed = null)
+    {
+        if(AuthenticationStatus())
+        {
+            //Successful callback lambda
+            BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+            {
+                Debug.Log("User Statistics request SUCCEEDED: " + responseData);
+                //Read Json
+                JsonData data = JsonMapper.ToObject(responseData);
+                JsonData statistics = data["data"]["statistics"];
+
+                List<Statistics> statisticsList = new List<Statistics>();
+
+                long value = 0;
+                string description;
+
+                foreach(string key in statistics.Keys)
+                {
+                    value = long.Parse(statistics[key].ToString());
+                    description = brainCloudDescriptions[key];
+                    statisticsList.Add(new Statistics(key, description, value));
+                }
+
+                if(userStatisticsReqCompleted != null)
+                {
+                    userStatisticsReqCompleted(ref statisticsList);
+                }
+            };
+
+            //Failed callback lambda
+            BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+            {
+                Debug.Log("User Statistics Request FAILED: " + statusMessage);
+
+                if(userStatisticsReqFailed != null)
+                {
+                    userStatisticsReqFailed();
+                }
+            };
+
+            //Make brainCloud request
+            m_brainCloud.PlayerStatisticsService.ReadAllUserStats(successCallback, failureCallback);
+        }
+        else
+        {
+            Debug.Log("User Statistics Request FAILED: User not Authenticated");
+
+            if(userStatisticsReqFailed != null)
+            {
+                userStatisticsReqFailed();
+            }
+        }
+
+    }
+
+    public void IncrementUserStatistics(Dictionary<string, object> data, IncrementUserStatisticsCompleted incrementUserStatisticsCompleted = null,
+        IncrementUserStatisticsFailed incrementUserStatisticsFailed = null)
+    {
+        if(AuthenticationStatus())
+        {
+            //Successful Callback lambda
+            BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+            {
+                Debug.Log("User Statistics Increment SUCCEEDED: " + responseData);
+
+                JsonData jsonData = JsonMapper.ToObject(responseData);
+                JsonData statistics = jsonData["data"]["statistics"];
+                List<Statistics> statisticsList = new List<Statistics>();
+
+                long value = 0;
+                string description;
+                foreach (string key in statistics.Keys)
+                {
+                    value = long.Parse(statistics[key].ToString());
+                    description = brainCloudDescriptions[key];
+                    statisticsList.Add(new Statistics(key, description, value));
+                }
+
+                if (incrementUserStatisticsCompleted != null)
+                {
+                    incrementUserStatisticsCompleted(ref statisticsList);
+                }
+            };
+
+            //Failed Callback lambda
+            BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+            {
+                Debug.Log("User Statistics Increment FAILED: " + statusMessage);
+
+                if (incrementUserStatisticsFailed != null)
+                {
+                    incrementUserStatisticsFailed();
+                }
+            };
+
+            //brainCloud Request
+            m_brainCloud.PlayerStatisticsService.IncrementUserStats(data,successCallback,failureCallback);
+        }
+        else
+        {
+            Debug.Log("User Statistics Increment FAILED: User not Authenticated");
+            if(incrementUserStatisticsFailed != null)
+            {
+                incrementUserStatisticsFailed();
             }
         }
     }

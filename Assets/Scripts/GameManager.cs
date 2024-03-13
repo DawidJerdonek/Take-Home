@@ -56,11 +56,22 @@ public class GameManager : MonoBehaviour
     public void OnAuthenticationReqCompleted()
     {
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+        NetworkManager.sharedInstance.ReqUserStatistics(OnUserStatisticsReqCompleted);
     }
 
     private void OnPostScoreReqCompleted()
     {
         LeaderboardsManager.instance.SetUserTime(m_elapsedTime);
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
+    }
+
+    private void OnUserStatisticsReqCompleted(ref List<Statistics> statistics)
+    {
+        StatisticsManager.instance.SetStatistics(ref statistics);
+    }
+
+    public void OnUserStatisticsIncrementCompleted(ref List<Statistics> statistics)
+    {
+        StatisticsManager.instance.SetStatistics(ref statistics);
     }
 }

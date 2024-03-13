@@ -13,7 +13,7 @@ public class CookieClicker : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timesClickedText;
     [SerializeField] private TextMeshProUGUI timeSpentText;
 
-    public int cookieClicked = 0;
+    public long cookieClicked = 0;
 
     private float timer = 0;
     private float hours = 0;
@@ -26,6 +26,7 @@ public class CookieClicker : MonoBehaviour
         {
             cookie = cookie.GetComponent<Button>();
             cookie.onClick.AddListener(CookieClicked);
+            SetCookieStat();
         }
     }
 
@@ -41,12 +42,38 @@ public class CookieClicker : MonoBehaviour
         hours = Mathf.FloorToInt(minutes % 60);
         timeSpentText.text = "You have been clicking for:\n" + hours + " Hours, " + minutes + " Minutes, and " + seconds + " Seconds!";
 
+        //Update Statistics
+        //Statistics secondsStat = StatisticsManager.instance.GetStatisticByName(NetworkManager.brainCloudStatSecondsElapsed);
+        //SecondsStat.increment();
+
 
     }
 
     void CookieClicked()
     {
         cookieClicked++;
-        Debug.Log("Button Clicked");
+
+        //Update Statistics
+        Statistics numberClicked = StatisticsManager.instance.GetStatisticByName(NetworkManager.brainCloudStatCookiesClicked);
+        numberClicked.IncrementValue();
+
+        
+    }
+
+    void SetCookieStat()
+    {
+        Statistics cookieStat = StatisticsManager.instance.GetStatisticByName("CookiesClicked");
+        cookieClicked = cookieStat.Value;
+    }
+
+    public void SaveStats()
+    {
+
+        //Send to brainCloud 
+        Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
+        if (dictionary != null)
+        {
+            NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
+        }
     }
 }
