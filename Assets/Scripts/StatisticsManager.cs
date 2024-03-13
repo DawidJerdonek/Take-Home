@@ -10,8 +10,15 @@ public class StatisticsManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public Statistics GetStatisticByName(string name)

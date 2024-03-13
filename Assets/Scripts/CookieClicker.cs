@@ -12,6 +12,9 @@ public class CookieClicker : MonoBehaviour
     [SerializeField] private Transform canvas;
     [SerializeField] private TextMeshProUGUI timesClickedText;
     [SerializeField] private TextMeshProUGUI timeSpentText;
+    [SerializeField] private TextMeshProUGUI achieve100Text;
+    [SerializeField] private TextMeshProUGUI achieve500Text;
+    [SerializeField] private TextMeshProUGUI achieve10000Text;
 
     public long cookieClicked = 0;
 
@@ -22,6 +25,7 @@ public class CookieClicker : MonoBehaviour
 
     private bool doubleClicks = false;
     private bool quadraClicks = false;
+    private bool clicksX20 = false;
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Gameplay")
@@ -55,11 +59,15 @@ public class CookieClicker : MonoBehaviour
 
     void CheckCookieAchievements()
     {
+        Color green = new Color32(127, 255, 32, 255);
+
         Achievement click100 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick100);
         if(click100 != null && !click100.Awarded && cookieClicked >= 100)
         {
             click100.AwardAchievement();
             doubleClicks = true;
+            achieve100Text.color = green;
+            achieve100Text.text += "    x2 Clicks!";
         }
 
         Achievement click500 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick500);
@@ -67,17 +75,32 @@ public class CookieClicker : MonoBehaviour
         {
             click500.AwardAchievement();
             quadraClicks = true;
+            achieve500Text.color = green;
+            achieve500Text.text += "    x2 Clicks!";
+        }
+
+        Achievement click10000 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick10000);
+        if (click10000 != null && !click10000.Awarded && cookieClicked >= 10000)
+        {
+            click10000.AwardAchievement();
+            clicksX20 = true;
+            achieve10000Text.color = green;
+            achieve10000Text.text += "    x5 Clicks!";
         }
     }
 
+
     void CookieClicked()
     {
-        
-
         //Update Statistics
         Statistics numberClicked = StatisticsManager.instance.GetStatisticByName(NetworkManager.brainCloudStatCookiesClicked);
 
-        if (quadraClicks)
+        if(clicksX20)
+        {
+            cookieClicked += 20;
+            numberClicked.IncrementByValue(20);
+        }
+        else if (quadraClicks)
         {
             cookieClicked += 4;
             numberClicked.IncrementByValue(4);
@@ -102,12 +125,22 @@ public class CookieClicker : MonoBehaviour
 
     public void SaveStats()
     {
-
         //Send to brainCloud 
         Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
         if (dictionary != null)
         {
             NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
         }
+    }
+
+    public void SaveAndExit()
+    {
+        //Send to brainCloud
+        Dictionary<string, object> dictionary = StatisticsManager.instance.GetIncrementsDictionary();
+        if (dictionary != null)
+        {
+            NetworkManager.sharedInstance.IncrementUserStatistics(dictionary, GameManager.gameManagerInstance.OnUserStatisticsIncrementCompleted);
+        }
+        MenuManager.instance.MainMenuScene();
     }
 }

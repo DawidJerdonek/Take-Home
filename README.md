@@ -9,23 +9,31 @@ and how long they have been clicking for. Both these values are stored by utilis
 
 Project Features:
 Projects integrated with brainCloud Unity SDK
-The project utilises Anonymous and and Universal Authentication for players.
+The project is made up of 3 Scenes. Main Menu, Login, Gameplay
+The project utilises Universal Authentication for players.
 Players can log in using a username and password while also being able to log out.
-The project contains leaderboards which store player highscores and other variables.
+The project contains leaderboards which store player highscores.
+Players can submit their scores to the leaderboards by clicking Submit Highscore.
 Players are able to click a cookie, the idea similar to many games of the "Cookie Clicker" genre.
-
+Players can earn achievements which in turn unlock permanent upgrades for the game.(eg. after 100 cookies, players get two cookies for each click)
+Players can save their progress to brainCloud by clicking save or save and exit.
 How to Demo:
 
 What I found easy:
-I liked how easy to navigate and quite user friendly the brainCloud.
-I think the documentation and explanations that brainCloud provides for their service are incredibly good and intuitive.
+I liked how easy to navigate and quite user friendly brainCloud is.
+I think the documentation and explanations that brainCloud provides for their service are incredibly good, intuitive and quite comprehensive.
+Implementing user statistics and achievements was straight forward and easy to understand.
 
 What I found difficult:
+Implementing Leaderboards into the project and understanding how they are handled. 
 
 What skills I have learned:
-I learned how to set up brainCloud backend for a game. The service seems incredibly valuable and 
-incredibly impressive in terms of features and and tools which it provides.
-I learned how to sned data from client to brainCloud leaderboards and how to display them.
+I learned how to set up brainCloud backend for a game. 
+The service seems incredibly valuable and impressive in terms of features and tools which it provides.
+I learned how to send data from client to brainCloud leaderboards.
+How to implement and display statistics for users.
+How to implement and display achievements for users.
+How I can apply permanent upgrades in a game to a user based on achievements.
 
 Video Link:
 

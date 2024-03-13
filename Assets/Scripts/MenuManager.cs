@@ -6,26 +6,18 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager instance;
+
     [SerializeField] private GameObject displayLeaderboard;
     [SerializeField] private List<GameObject> defaultPanel = new List<GameObject>();
 
     [SerializeField] private Button loginButton;
 
-    public void Update()
+    private void Awake()
     {
-        //if (SceneManager.GetActiveScene().name == "LogIn")
-        //{
-        //    if (NetworkManager.sharedInstance.isPlayerUniversallyAuthenticated)
-        //    {
-        //        loginButton.gameObject.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        loginButton.gameObject.SetActive(true);
-        //    }
-        //}
-
+        instance = this;
     }
+
     public void ViewLeaderboard()
     {
         for (int i = 0; i < defaultPanel.Count; i++)

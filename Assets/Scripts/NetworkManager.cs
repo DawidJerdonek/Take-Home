@@ -20,7 +20,7 @@ public class NetworkManager : MonoBehaviour
     [Header("Achievement Constants")]
     public const string brainCloudAchievementClick100 = "100Cookies";
     public const string brainCloudAchievementClick500 = "500Cookies";
-
+    public const string brainCloudAchievementClick10000 = "10000Cookies";
 
     public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
     { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" }, 
@@ -54,8 +54,15 @@ public class NetworkManager : MonoBehaviour
 
     private void Awake()
     {
-        sharedInstance = this;
-        DontDestroyOnLoad(gameObject);
+        if (sharedInstance != null && sharedInstance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            sharedInstance = this;
+            DontDestroyOnLoad(gameObject);
+        }
 
         m_brainCloud = gameObject.AddComponent<BrainCloudWrapper>();
         m_brainCloud.Init();
