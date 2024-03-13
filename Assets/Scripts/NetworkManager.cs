@@ -7,14 +7,20 @@ using UnityEditor.Compilation;
 
 public class NetworkManager : MonoBehaviour
 {
+    [Header("Leaderboard Constants")]
     public const string brainCloudHighscoreLeaderboardID = "Highscore";
     public const int brainCloudDefaultMinHighscoreIndex = 0;
     public const int brainCloudDefaultMaxHighscoreIndex = 9;
 
-    //Statistics
+    [Header("User Stats Constants")]
     public const string brainCloudStatCookiesClicked = "CookiesClicked";
     public const string brainCloudStatMinutesElapsed = "MinutesElapsed";
     public const string brainCloudStatSecondsElapsed = "SecondsElapsed";
+
+    [Header("Achievement Constants")]
+    public const string brainCloudAchievementClick100 = "100Cookies";
+    public const string brainCloudAchievementClick500 = "500Cookies";
+
 
     public static readonly Dictionary<string, string> brainCloudDescriptions = new Dictionary<string, string>
     { { brainCloudStatCookiesClicked,"Number of Cookies clicked by a user" }, 
@@ -33,6 +39,8 @@ public class NetworkManager : MonoBehaviour
     public delegate void UserStatisticsReqFailed();
     public delegate void IncrementUserStatisticsCompleted(ref List<Statistics> statistics);
     public delegate void IncrementUserStatisticsFailed();
+    public delegate void AchievementReqCompleted(ref List<Achievement> achievements);
+    public delegate void AchievementReqFailed();
 
 
     public static NetworkManager sharedInstance;
@@ -440,6 +448,68 @@ public class NetworkManager : MonoBehaviour
             if(incrementUserStatisticsFailed != null)
             {
                 incrementUserStatisticsFailed();
+            }
+        }
+    }
+
+    public void RequestAchievements(AchievementReqCompleted achievementReqCompleted = null, AchievementReqFailed achievementReqFailed = null)
+    {
+        if(AuthenticationStatus())
+        {
+            //Successful Callback lambda
+            BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+            {
+                Debug.Log("Achievement Request SUCCEEDED: " + responseData);
+
+                JsonData jsonData = JsonMapper.ToObject(responseData);
+                JsonData achievements = jsonData["data"]["achievements"];
+                List<Achievement> achievementsList = new List<Achievement>();
+
+                string id;
+                string title;
+                string description;
+                string status;
+
+                if(achievements.IsArray)
+                {
+                    for(int i = 0; i< achievements.Count; i++)
+                    {
+                        id = achievements[i]["id"].ToString();
+                        title = achievements[i]["title"].ToString();
+                        description = achievements[i]["description"].ToString();
+                        status = achievements[i]["status"].ToString();
+
+                        achievementsList.Add(new Achievement(id, title, description, status));
+                    }
+                }
+
+                if (achievementReqCompleted != null)
+                {
+                    achievementReqCompleted(ref achievementsList);
+                }
+            };
+
+            //Failed Callback lambda
+            BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+            {
+                Debug.Log("Achievement Request FAILED: " + statusMessage);
+
+                if (achievementReqFailed != null)
+                {
+                    achievementReqFailed();
+                }
+            };
+
+            //brainCloud Request
+            m_brainCloud.GamificationService.ReadAchievements(true, successCallback, failureCallback);
+        }
+        else
+        {
+            Debug.Log("Achievement Request FAILED: User not Authenticated");
+
+            if (achievementReqFailed != null)
+            {
+                achievementReqFailed();
             }
         }
     }

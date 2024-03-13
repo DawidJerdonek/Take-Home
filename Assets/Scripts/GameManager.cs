@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         NetworkManager.sharedInstance.RequestLeaderboard(NetworkManager.brainCloudHighscoreLeaderboardID, OnLeaderboardRequestCompleted);
         NetworkManager.sharedInstance.ReqUserStatistics(OnUserStatisticsReqCompleted);
+        NetworkManager.sharedInstance.RequestAchievements(OnAchievenemtReqCompleted);
     }
 
     private void OnPostScoreReqCompleted()
@@ -73,5 +74,10 @@ public class GameManager : MonoBehaviour
     public void OnUserStatisticsIncrementCompleted(ref List<Statistics> statistics)
     {
         StatisticsManager.instance.SetStatistics(ref statistics);
+    }
+
+    private void OnAchievenemtReqCompleted(ref List<Achievement> achievements)
+    {
+        AchievementManager.instance.SetAchievements(ref achievements);
     }
 }
