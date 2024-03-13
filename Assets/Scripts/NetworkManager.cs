@@ -551,7 +551,8 @@ public class NetworkManager : MonoBehaviour
             };
 
             //brainCloud Request
-            m_brainCloud.GamificationService.ReadAchievements(true, successCallback, failureCallback);
+            string[] achievenents = { achievement.Id };
+            m_brainCloud.GamificationService.AwardAchievements(achievenents, successCallback, failureCallback);
         }
         else
         {

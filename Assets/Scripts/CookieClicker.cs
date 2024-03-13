@@ -64,7 +64,7 @@ public class CookieClicker : MonoBehaviour
     void CheckCookieAchievements()
     {
         Color green = new Color32(127, 255, 32, 255);
-
+        
         Achievement click100 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick100);
         if(click100 != null && !click100.Awarded && cookieClicked >= 100)
         {
@@ -72,6 +72,7 @@ public class CookieClicker : MonoBehaviour
             doubleClicks = true;
             achieve100Text.color = green;
             achieve100Text.text += "    x2 Clicks!";
+            Debug.Log(click100.Awarded);
         }
 
         Achievement click500 = AchievementManager.instance.GetAchievementById(NetworkManager.brainCloudAchievementClick500);
