@@ -33,6 +33,10 @@ Integrated brainCloud into a Cookie Clicker game.
 
 #### Client
 1. Clone GitHub repo to computer and open using Unity.
+1b. Ensure that brainCloud is connected to the project by navigating to the brainCloud option at the top of the Unity Editor.
+1c. If the Active app ID is 14772 and the Name is Take-Home Assignment then you can skip to step 2.
+1d. Click the brainCloud option at the top and click login, use the credentials attached within email to log into brainCloud account. Ensure Use Default brainCloud Server is checked. Click login
+1e. Select Team DawidJ and Select App Take-Home Assignment, you can now click the X on the pop-up window.
 2. Open the MainMenu Scene
 3. Run the Scene.
 4. Press the Start Button
