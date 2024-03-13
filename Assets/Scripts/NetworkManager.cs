@@ -41,6 +41,9 @@ public class NetworkManager : MonoBehaviour
     public delegate void IncrementUserStatisticsFailed();
     public delegate void AchievementReqCompleted(ref List<Achievement> achievements);
     public delegate void AchievementReqFailed();
+    public delegate void AchievementAwardCompleted();
+    public delegate void AchievementAwardFailed();
+
 
 
     public static NetworkManager sharedInstance;
@@ -510,6 +513,48 @@ public class NetworkManager : MonoBehaviour
             if (achievementReqFailed != null)
             {
                 achievementReqFailed();
+            }
+        }
+    }
+
+    public void AwardAchievementReq(Achievement achievement, AchievementAwardCompleted achievementAwardCompleted = null,
+        AchievementAwardFailed achievementAwardFailed = null)
+    {
+        if(AuthenticationStatus())
+        {
+            //Successful Callback lambda
+            BrainCloud.SuccessCallback successCallback = (responseData, cbObject) =>
+            {
+                Debug.Log("Achievement Award Request SUCCEEDED: " + responseData);
+
+
+                if (achievementAwardCompleted != null)
+                {
+                    achievementAwardCompleted();
+                }
+            };
+
+            //Failed Callback lambda
+            BrainCloud.FailureCallback failureCallback = (statusMessage, code, error, cbObject) =>
+            {
+                Debug.Log("Achievement Award Request FAILED: " + statusMessage);
+
+                if (achievementAwardFailed != null)
+                {
+                    achievementAwardFailed();
+                }
+            };
+
+            //brainCloud Request
+            m_brainCloud.GamificationService.ReadAchievements(true, successCallback, failureCallback);
+        }
+        else
+        {
+            Debug.Log("Achievement Award Request FAILED: User not Authenticated");
+
+            if (achievementAwardFailed != null)
+            {
+                achievementAwardFailed();
             }
         }
     }

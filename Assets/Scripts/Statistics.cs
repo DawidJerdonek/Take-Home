@@ -22,6 +22,12 @@ public class Statistics
         m_increment += amount;
         m_value += amount;
     }
+    public void IncrementByValue(int amount)
+    {
+        m_increment += amount;
+        m_value += amount;
+    }
+    
 
     public string Name
     { 

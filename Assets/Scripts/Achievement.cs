@@ -26,6 +26,12 @@ public class Achievement
         return "";
     }
 
+    public void AwardAchievement()
+    {
+        m_awarded = true;
+        NetworkManager.sharedInstance.AwardAchievementReq(this);
+    }
+
     public string Id
     {
         get { return m_id; }
